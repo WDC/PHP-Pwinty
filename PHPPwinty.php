@@ -1,17 +1,19 @@
 <?php
-
+include_once('config.php');
 /**
  * A PHP implementation of the Pwinty HTTP API - http://www.pwinty.com/api.html
  * Developed by Brad Pineau for Picisto.com. Released to public under Creative Commons.
- *
+ * 
+ * Configuration values are located in the config.php file.
+ * 
  * @author Brad Pineau
+ * @author David M. Lemcoe Jr.
  * @author Picisto.com
  * @version 1.0
  * @access public
  * @see http://www.bradpineau.com/PHPPwinty/
+ * @see https://github.com/WDC/PHP-Pwinty/
  */
-// set this variable to false to send orders to the sandbox. set this variable to true when you want to send real orders
-define("PWINTY_LIVE", false);
 
 class PHPPwinty {
 
