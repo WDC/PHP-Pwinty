@@ -24,7 +24,7 @@ class PHPPwinty {
      *
      * @access private
      */
-    function PHPPwinty() {
+    private function PHPPwinty() {
         if (PWINTY_LIVE) {
             $this->api_url = "https://api.pwinty.com";
         } else {
@@ -39,7 +39,7 @@ class PHPPwinty {
      * @return array The response returned from the API call.
      * @access private
      */
-    function apiCall($call, $data, $method) {
+    private function apiCall($call, $data, $method) {
         /*
           internal function, you shouldn't call directly
          */
@@ -105,7 +105,7 @@ class PHPPwinty {
      * @return string The newly created order id
      * @access public
      */
-    function createOrder($recipientName, $address1, $address2, $addressTownOrCity, $stateOrCounty, $postalOrZipCode, $country, $textOnReverse) {
+    public function createOrder($recipientName, $address1, $address2, $addressTownOrCity, $stateOrCounty, $postalOrZipCode, $country, $textOnReverse) {
         $data = array();
         $data["recipientName"] = $recipientName;
         $data["address1"] = $address1;
@@ -137,7 +137,7 @@ class PHPPwinty {
      * @return array The order details
      * @access public
      */
-    function getOrder($id) {
+    public function getOrder($id) {
         $data = array();
         $data["id"] = $id;
 
@@ -169,7 +169,7 @@ class PHPPwinty {
      * @return array The order details
      * @access public
      */
-    function updateOrder($id, $recipientName, $address1, $address2, $addressTownOrCity, $stateOrCounty, $postalOrZipCode, $country, $textOnReverse) {
+    public function updateOrder($id, $recipientName, $address1, $address2, $addressTownOrCity, $stateOrCounty, $postalOrZipCode, $country, $textOnReverse) {
         $data = array();
         $data["id"] = $id;
         $data["recipientName"] = $recipientName;
@@ -203,7 +203,7 @@ class PHPPwinty {
      * @return array The order details
      * @access public
      */
-    function updateOrderStatus($id, $status) {
+    public function updateOrderStatus($id, $status) {
         $data = array();
         $data["id"] = $id;
         $data["status"] = $status;
@@ -228,7 +228,7 @@ class PHPPwinty {
      * @return array The order submission status
      * @access public
      */
-    function getOrderSubmissionStatus($id) {
+    public function getOrderSubmissionStatus($id) {
         $data = array();
         $data["id"] = $id;
 
@@ -256,7 +256,7 @@ class PHPPwinty {
      * @return array The order submission status
      * @access public
      */
-    function addPhoto($orderId, $type, $url, $copies, $sizing) {
+    public function addPhoto($orderId, $type, $url, $copies, $sizing) {
         $data = array();
         $data["orderId"] = $orderId;
         $data["type"] = $type;
@@ -284,7 +284,7 @@ class PHPPwinty {
      * @return array The photo details
      * @access public
      */
-    function getPhoto($id) {
+    public function getPhoto($id) {
         $data = array();
         $data["id"] = $id;
 
@@ -308,7 +308,7 @@ class PHPPwinty {
      * @return string The status of the delete
      * @access public
      */
-    function deletePhoto($id) {
+    public function deletePhoto($id) {
         $data = array();
         $data["id"] = $id;
 
@@ -333,7 +333,7 @@ class PHPPwinty {
      * @return array The document details
      * @access public
      */
-    function addDocument($orderId, $file) {
+    public function addDocument($orderId, $file) {
         $path_parts = pathinfo($file);
 
         $data = array();
@@ -361,7 +361,7 @@ class PHPPwinty {
      * @return array The document details
      * @access public
      */
-    function getDocument($id) {
+    public function getDocument($id) {
         $data = array();
         $data["id"] = $id;
 
@@ -385,7 +385,7 @@ class PHPPwinty {
      * @return string The status of the delete
      * @access public
      */
-    function deleteDocument($id) {
+    public function deleteDocument($id) {
         $data = array();
         $data["id"] = $id;
 
@@ -410,7 +410,7 @@ class PHPPwinty {
      * @return array The document details
      * @access public
      */
-    function addSticker($orderId, $file) {
+    public function addSticker($orderId, $file) {
         $path_parts = pathinfo($file);
 
         $data = array();
@@ -438,7 +438,7 @@ class PHPPwinty {
      * @return array The sticker details
      * @access public
      */
-    function getSticker($id) {
+    public function getSticker($id) {
         $data = array();
         $data["id"] = $id;
 
@@ -462,7 +462,7 @@ class PHPPwinty {
      * @return string The status of the delete
      * @access public
      */
-    function deleteSticker($id) {
+    public function deleteSticker($id) {
         $data = array();
         $data["id"] = $id;
 
@@ -478,7 +478,6 @@ class PHPPwinty {
             return 0;
         }
     }
-
 }
 ?>
 
