@@ -93,7 +93,7 @@ class PHPPwinty {
     /**
      * Creates a new order
      *
-     * @param string $recipientName Who the order should be addressed to
+     * @param mixed  $recipientName Who the order should be addressed to OR an array with all the data in an associative array. 
      * @param string $address1 1st line of recipient address
      * @param string $address2optional 2nd line of recipient address
      * @param string $addressTownOrCity Town or City in the address
@@ -104,17 +104,22 @@ class PHPPwinty {
      * @return string The newly created order id
      * @access public
      */
-    public function createOrder($recipientName, $address1, $address2, $addressTownOrCity, $stateOrCounty, $postalOrZipCode, $country, $textOnReverse) {
-        $data = array(
-            'recipientName' => $recipientName,
-            'address1' => $address1,
-            'address2' => $address2,
-            'addressTownOrCity' => $addressTownOrCity,
-            'stateOrCounty' => $stateOrCounty,
-            'postalOrZipCode' => $postalOrZipCode,
-            'country' => $country,
-            'textOnReverse' => $textOnReverse
-        );
+    public function createOrder($recipientName, $address1 = NULL, $address2 = NULL, $addressTownOrCity = NULL, $stateOrCounty = NULL, $postalOrZipCode = NULL, $country = NULL, $textOnReverse = NULL) {
+		if (is_array($recipientName)) {
+			$data = $recipientName;
+		}
+		else {
+			$data = array(
+					'recipientName' => $recipientName,
+					'address1' => $address1,
+					'address2' => $address2,
+					'addressTownOrCity' => $addressTownOrCity,
+					'stateOrCounty' => $stateOrCounty,
+					'postalOrZipCode' => $postalOrZipCode,
+					'country' => $country,
+					'textOnReverse' => $textOnReverse
+				);
+		}
         $data = $this->apiCall("/Orders", $data, "POST");
 
         if (is_array($data)) {
