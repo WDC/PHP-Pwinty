@@ -1,19 +1,18 @@
 <?php
-include_once('config.php');
+
 /**
  * A PHP implementation of the Pwinty HTTP API - http://www.pwinty.com/api.html
  * Developed by Brad Pineau for Picisto.com. Released to public under Creative Commons.
- * 
- * Configuration values are located in the config.php file.
- * 
+ *
  * @author Brad Pineau
- * @author David M. Lemcoe Jr.
  * @author Picisto.com
  * @version 1.0
  * @access public
  * @see http://www.bradpineau.com/PHPPwinty/
- * @see https://github.com/WDC/PHP-Pwinty/
  */
+// set this variable to false to send orders to the sandbox. set this variable to true when you want to send real orders
+define("PWINTY_LIVE", false);
+
 class PHPPwinty {
 
     var $api_url = "";
@@ -24,7 +23,7 @@ class PHPPwinty {
      *
      * @access private
      */
-    private function PHPPwinty() {
+    function PHPPwinty() {
         if (PWINTY_LIVE) {
             $this->api_url = "https://api.pwinty.com";
         } else {
@@ -39,7 +38,7 @@ class PHPPwinty {
      * @return array The response returned from the API call.
      * @access private
      */
-    private function apiCall($call, $data, $method) {
+    function apiCall($call, $data, $method) {
         /*
           internal function, you shouldn't call directly
          */
@@ -105,17 +104,17 @@ class PHPPwinty {
      * @return string The newly created order id
      * @access public
      */
-    public function createOrder($recipientName, $address1, $address2, $addressTownOrCity, $stateOrCounty, $postalOrZipCode, $country, $textOnReverse) {
-        $data = array();
-        $data["recipientName"] = $recipientName;
-        $data["address1"] = $address1;
-        $data["address2"] = $address2;
-        $data["addressTownOrCity"] = $addressTownOrCity;
-        $data["stateOrCounty"] = $stateOrCounty;
-        $data["postalOrZipCode"] = $postalOrZipCode;
-        $data["country"] = $country;
-        $data["textOnReverse"] = $textOnReverse;
-
+    function createOrder($recipientName, $address1, $address2, $addressTownOrCity, $stateOrCounty, $postalOrZipCode, $country, $textOnReverse) {
+        $data = array(
+            'recipientName' => $recipientName,
+            'address1' => $address1,
+            'address2' => $address2,
+            'addressTownOrCity' => $addressTownOrCity,
+            'stateOrCounty' => $stateOrCounty,
+            'postalOrZipCode' => $postalOrZipCode,
+            'country' => $country,
+            'textOnReverse' => $textOnReverse
+        );
         $data = $this->apiCall("/Orders", $data, "POST");
 
         if (is_array($data)) {
@@ -137,9 +136,10 @@ class PHPPwinty {
      * @return array The order details
      * @access public
      */
-    public function getOrder($id) {
-        $data = array();
-        $data["id"] = $id;
+    function getOrder($id) {
+        $data = array(
+            'id' => $id
+        );
 
         $data = $this->apiCall("/Orders", $data, "GET");
         if (is_array($data)) {
@@ -169,17 +169,18 @@ class PHPPwinty {
      * @return array The order details
      * @access public
      */
-    public function updateOrder($id, $recipientName, $address1, $address2, $addressTownOrCity, $stateOrCounty, $postalOrZipCode, $country, $textOnReverse) {
-        $data = array();
-        $data["id"] = $id;
-        $data["recipientName"] = $recipientName;
-        $data["address1"] = $address1;
-        $data["address2"] = $address2;
-        $data["addressTownOrCity"] = $addressTownOrCity;
-        $data["stateOrCounty"] = $stateOrCounty;
-        $data["postalOrZipCode"] = $postalOrZipCode;
-        $data["country"] = $country;
-        $data["textOnReverse"] = $textOnReverse;
+    function updateOrder($id, $recipientName, $address1, $address2, $addressTownOrCity, $stateOrCounty, $postalOrZipCode, $country, $textOnReverse) {
+        $data = array(
+            'id' => $id,
+            'recipientName' => $recipientName,
+            'address1' => $address1,
+            'address2' => $address2,
+            'addressTownOrCity' => $addressTownOrCity,
+            'stateOrCounty' => $stateOrCounty,
+            'postalOrZipCode' => $postalOrZipCode,
+            'country' => $country,
+            'textOnReverse' => $textOnReverse
+        );
 
         $data = $this->apiCall("/Orders", $data, "PUT");
 
@@ -203,10 +204,11 @@ class PHPPwinty {
      * @return array The order details
      * @access public
      */
-    public function updateOrderStatus($id, $status) {
-        $data = array();
-        $data["id"] = $id;
-        $data["status"] = $status;
+    function updateOrderStatus($id, $status) {
+        $data = array(
+            'id' => $id,
+            'status' => $status
+        );
 
         $data = $this->apiCall("/Orders/Status", $data, "POST");
         if (is_array($data)) {
@@ -228,9 +230,10 @@ class PHPPwinty {
      * @return array The order submission status
      * @access public
      */
-    public function getOrderSubmissionStatus($id) {
-        $data = array();
-        $data["id"] = $id;
+    function getOrderSubmissionStatus($id) {
+        $data = array(
+            'id' => $id
+        );
 
         $data = $this->apiCall("/Orders/SubmissionStatus", $data, "GET");
         if (is_array($data)) {
@@ -256,13 +259,14 @@ class PHPPwinty {
      * @return array The order submission status
      * @access public
      */
-    public function addPhoto($orderId, $type, $url, $copies, $sizing) {
-        $data = array();
-        $data["orderId"] = $orderId;
-        $data["type"] = $type;
-        $data["url"] = $url;
-        $data["copies"] = $copies;
-        $data["sizing"] = $sizing;
+    function addPhoto($orderId, $type, $url, $copies, $sizing) {
+        $data = array(
+            'orderId' => $orderId,
+            'type' => $type,
+            'url' => $url,
+            'copies' => $copies,
+            'sizing' => $sizing
+        );
 
         $data = $this->apiCall("/Photos", $data, "POST");
         if (is_array($data)) {
@@ -284,9 +288,10 @@ class PHPPwinty {
      * @return array The photo details
      * @access public
      */
-    public function getPhoto($id) {
-        $data = array();
-        $data["id"] = $id;
+    function getPhoto($id) {
+        $data = array(
+            'id' => $id
+        );
 
         $data = $this->apiCall("/Photos", $data, "GET");
         if (is_array($data)) {
@@ -308,9 +313,10 @@ class PHPPwinty {
      * @return string The status of the delete
      * @access public
      */
-    public function deletePhoto($id) {
-        $data = array();
-        $data["id"] = $id;
+    function deletePhoto($id) {
+        $data = array(
+            'id' => $id
+        );
 
         $data = $this->apiCall("/Photos", $data, "DELETE");
         if (is_array($data)) {
@@ -333,13 +339,14 @@ class PHPPwinty {
      * @return array The document details
      * @access public
      */
-    public function addDocument($orderId, $file) {
+    function addDocument($orderId, $file) {
         $path_parts = pathinfo($file);
 
-        $data = array();
-        $data["orderId"] = $orderId;
-        $data["fileName"] = $path_parts['basename'];
-        $data["file"] = "@" . $file;
+        $data = array(
+            'orderId' => $orderId,
+            'fileName' => $path_parts['basename'],
+            'file' => '@' . $file
+        );
 
         $data = $this->apiCall("/Documents", $data, "POST");
         if (is_array($data)) {
@@ -361,9 +368,10 @@ class PHPPwinty {
      * @return array The document details
      * @access public
      */
-    public function getDocument($id) {
-        $data = array();
-        $data["id"] = $id;
+    function getDocument($id) {
+        $data = array(
+            'id' => $id
+        );
 
         $data = $this->apiCall("/Documents", $data, "GET");
         if (is_array($data)) {
@@ -385,9 +393,10 @@ class PHPPwinty {
      * @return string The status of the delete
      * @access public
      */
-    public function deleteDocument($id) {
-        $data = array();
-        $data["id"] = $id;
+    function deleteDocument($id) {
+        $data = array(
+            'id' => $id
+        );
 
         $data = $this->apiCall("/Documents", $data, "DELETE");
         if (is_array($data)) {
@@ -410,13 +419,14 @@ class PHPPwinty {
      * @return array The document details
      * @access public
      */
-    public function addSticker($orderId, $file) {
+    function addSticker($orderId, $file) {
         $path_parts = pathinfo($file);
 
-        $data = array();
-        $data["orderId"] = $orderId;
-        $data["fileName"] = $path_parts['basename'];
-        $data["file"] = "@" . $file;
+        $data = array(
+            'orderId' => $orderId,
+            'fileName' => $path_parts['basename'],
+            'file' => '@' . $file
+        );
 
         $data = $this->apiCall("/Stickers", $data, "POST");
         if (is_array($data)) {
@@ -438,9 +448,10 @@ class PHPPwinty {
      * @return array The sticker details
      * @access public
      */
-    public function getSticker($id) {
-        $data = array();
-        $data["id"] = $id;
+    function getSticker($id) {
+        $data = array(
+            'id' => $id
+        );
 
         $data = $this->apiCall("/Stickers", $data, "GET");
         if (is_array($data)) {
@@ -462,9 +473,10 @@ class PHPPwinty {
      * @return string The status of the delete
      * @access public
      */
-    public function deleteSticker($id) {
-        $data = array();
-        $data["id"] = $id;
+    function deleteSticker($id) {
+        $data = array(
+            'id' => $id
+        );
 
         $data = $this->apiCall("/Stickers", $data, "DELETE");
         if (is_array($data)) {
