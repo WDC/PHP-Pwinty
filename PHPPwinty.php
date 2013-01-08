@@ -223,6 +223,31 @@ class PHPPwinty {
         }
     }
 
+	/** 
+	 * Wrapper for the updateOrderStatus() function. Simply submits the order.
+	 *
+	 * @param string $id order id
+	 * @access public
+	 */
+	function submitOrder($id) {
+        $data = array(
+            'id' => $id,
+            'status' => 'Submitted'
+        );
+
+        $data = $this->apiCall("/Orders/Status", $data, "POST");
+        if (is_array($data)) {
+            if (isset($data["error"])) {
+                $this->last_error = $data["error"];
+                return 0;
+            } else {
+                return $data;
+            }
+        } else {
+            return 0;
+        }
+	}
+
     /**
      * Gets information on whether the order is ready for submission, and any errors or warnings associated with the order
      *
