@@ -23,9 +23,9 @@ class PHPPwinty {
     /**
      * The class constructor
      *
-     * @access private
+     * @access public
      */
-    private function PHPPwinty() {
+    public function PHPPwinty() {
         if (PWINTY_LIVE) {
             $this->api_url = "https://api.pwinty.com";
         } else {
